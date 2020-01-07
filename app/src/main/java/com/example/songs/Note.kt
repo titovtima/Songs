@@ -16,6 +16,13 @@ class Note {
 
         fun makeName(note_id: Int, short_name: Char) : String {
             if (!natural_notes.containsKey(short_name)) throw NoteException(note_id, short_name)
+            if (note_id == 10) {
+                return when (short_name) {
+                    'A' -> "A#"
+                    'H' -> "Bb"
+                    else -> throw NoteException(note_id, short_name)
+                }
+            }
             return when (note_id - natural_notes[short_name]!!) {
                 0 -> short_name.toString()
                 1 -> short_name.toString() + "#"
@@ -25,6 +32,11 @@ class Note {
         }
 
         fun makeIdAndShortName(name: String) : Pair<Int,Char> {
+            if (name.isEmpty()) throw NoteException(name)
+            if (name[0] == 'B') {
+                if (name.length < 2 || name[1] != 'b') throw NoteException(name)
+                else return Pair(10, 'H')
+            }
             val short_name : Char = name[0]
             if (!natural_notes.containsKey(short_name)) throw NoteException(name)
             var note_id : Int = natural_notes[short_name]!!
