@@ -23,6 +23,19 @@ class Note {
                 else -> throw NoteException(note_id, short_name)
             }
         }
+
+        fun makeIdAndShortName(name: String) : Pair<Int,Char> {
+            val short_name : Char = name[0]
+            if (!natural_notes.containsKey(short_name)) throw NoteException(name)
+            var note_id : Int = natural_notes[short_name]!!
+            if (name.length > 1) {
+                when (name[1]) {
+                    '#' -> note_id++
+                    'b' -> note_id--
+                }
+            }
+            return Pair(note_id, short_name)
+        }
     }
 
     val note_id : Int
@@ -33,5 +46,12 @@ class Note {
         this.note_id = note_id
         this.short_name = short_name
         this.name = makeName(note_id, short_name)
+    }
+
+    constructor(name: String) {
+        this.name = name
+        val pair = makeIdAndShortName(name)
+        this.note_id = pair.first
+        this.short_name = pair.second
     }
 }
