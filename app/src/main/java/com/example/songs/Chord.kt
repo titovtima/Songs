@@ -21,20 +21,27 @@ class Chord {
     val step: Int
     val type: String
     val bas_step: Int
+    val inc_step: Int
+    val inc_bas_step: Int
 
-    constructor(step: Int, type: String, bas_step: Int) {
-        this.step = step
+    constructor(step: Int, type: String, bas_step: Int = step, inc_step: Int = 0, inc_bas_step: Int = 0) {
+        this.step = (step - 1) % 7 + 1
         this.type = type
         this.bas_step = bas_step
+        this.inc_step = inc_step
+        this.inc_bas_step = inc_bas_step
     }
 
-    constructor(step: Int, type: String) : this(step, type, step)
+    constructor(step: Int, type: Int, bas_step: Int = step, inc_step: Int = 0, inc_bas_step: Int = 0) :
+            this(step, Chord.types[type]!!, bas_step, inc_step, inc_bas_step)
+
+//    constructor(step: Int, type: String) : this(step, type, step)
 
     fun toString(key: Key): String {
-        var out = key.getStep(this.step).name
-        if (this.step != this.bas_step) {
+        var out = key.getStep(this.step, this.inc_step).name
+        if (this.step != this.bas_step || this.inc_bas_step != this.inc_step) {
             out += "/"
-            out += key.getStep(this.bas_step).name
+            out += key.getStep(this.bas_step, this.inc_bas_step).name
         }
         out += this.type
         return out

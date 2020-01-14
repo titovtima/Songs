@@ -16,10 +16,10 @@ class Key {
         this.type = Key.types[type]!!
     }
 
-    fun getStep(step: Int): Note {
+    fun getStep(step: Int, inc_step: Int = 0): Note {
         var st = step
         if (st > 7)
-            st = st % 7 + 1
-        return Note(this.note.note_id + this.type[st]!!, this.note.natural + st)
+            st = (st - 1) % 7 + 1
+        return Note(this.note.note_id + this.type[st]!! + inc_step, this.note.natural + st)
     }
 }

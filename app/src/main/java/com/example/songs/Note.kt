@@ -67,9 +67,9 @@ class Note {
     val name : String
 
     constructor(note_id: Int, natural: Int) {
-        this.note_id = note_id
-        this.natural = natural
-        this.name = makeName(note_id, natural)
+        this.note_id = note_id % 12
+        this.natural = natural % 7
+        this.name = makeName(this.note_id, this.natural)
     }
 
     constructor(name: String) {
