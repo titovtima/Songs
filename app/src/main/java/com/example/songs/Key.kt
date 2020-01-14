@@ -22,4 +22,10 @@ class Key {
             st = (st - 1) % 7 + 1
         return Note(this.note.note_id + this.type[st]!! + inc_step, this.note.natural + st)
     }
+
+    fun whatStep(note: Note): Pair<Int,Int> {
+        var step = (note.natural - this.note.natural + 7) % 7 + 1
+        var inc_step = (note.note_id - this.note.note_id - this.type[step]!! + 12) % 12
+        return Pair(step, inc_step)
+    }
 }

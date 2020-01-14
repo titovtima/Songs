@@ -1,5 +1,8 @@
 package com.example.songs
 
+import com.example.songs.Exceptions.ChordException
+import com.example.songs.Exceptions.NoteException
+
 class Chord {
     companion object {
         val types = mapOf<Int,String>(
@@ -36,6 +39,52 @@ class Chord {
             this(step, Chord.types[type]!!, bas_step, inc_step, inc_bas_step)
 
 //    constructor(step: Int, type: String) : this(step, type, step)
+
+    constructor(name: String, key: Key) {
+        var note: Note? = null
+        var bas_note: Note? = null
+        var type: String?
+        var pass = 0
+        try {
+            val p = Note.makeNote(name)
+            note = p.first
+            pass += p.second
+        } catch (e: NoteException) {
+            throw ChordException(name)
+        }
+        if (name.length > pass) {
+            if (name[pass] == '/') {
+                pass++
+                try {
+                    val p = Note.makeNote(name.substring(pass))
+                    bas_note = p.first
+                    pass += p.second
+                } catch (e: NoteException) {
+                    throw ChordException(name)
+                }
+            }
+        }
+        if (name.length > pass) {
+            if (Chord.types.containsValue(name.substring(pass))) {
+                this.type = name.substring(pass)
+            } else {
+                throw ChordException(name)
+            }
+        } else {
+            this.type = ""
+        }
+        val p_step = key.whatStep(note)
+        this.step = p_step.first
+        this.inc_step = p_step.second
+        if (bas_note != null) {
+            val p_bstep = key.whatStep(bas_note)
+            this.bas_step = p_bstep.first
+            this.inc_bas_step = p_bstep.second
+        } else {
+            this.bas_step = step
+            this.inc_bas_step = inc_step
+        }
+    }
 
     fun toString(key: Key): String {
         var out = key.getStep(this.step, this.inc_step).name

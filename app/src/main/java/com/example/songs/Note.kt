@@ -60,6 +60,25 @@ class Note {
             }
             return Pair(note_id, natural_notes.getFir(short_name)!!)
         }
+
+        fun makeNote(name: String): Pair<Note,Int> {
+            if (name.length == 0) throw NoteException(name)
+            var note: Note?
+            var pass: Int
+            try {
+                note = Note(name.substring(0,1))
+                pass = 1
+            } catch (e1: NoteException) {
+                if (name.length == 1) throw NoteException(name)
+                try {
+                    note = Note(name.substring(0, 2))
+                    pass = 2
+                } catch (e2: NoteException) {
+                    throw NoteException(name)
+                }
+            }
+            return Pair(note!!, pass)
+        }
     }
 
     val note_id : Int
