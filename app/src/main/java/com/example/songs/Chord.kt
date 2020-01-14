@@ -30,7 +30,13 @@ class Chord {
 
     constructor(step: Int, type: String) : this(step, type, step)
 
-//    fun toString(key: Int): String {
-//
-//    }
+    fun toString(key: Key): String {
+        var out = key.getStep(this.step).name
+        if (this.step != this.bas_step) {
+            out += "/"
+            out += key.getStep(this.bas_step).name
+        }
+        out += this.type
+        return out
+    }
 }
