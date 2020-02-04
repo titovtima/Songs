@@ -59,4 +59,20 @@ class NoteTest {
         assert(note.natural == 0)
         assert(note.note_id == 11)
     }
+
+    @Test
+    fun create_note_Cb_by_name() {
+        val note = Note("Cb")
+        assert(note.name == "Cb")
+        assert(note.natural == 0)
+        assert(note.note_id == 11)
+    }
+
+    @Test
+    fun create_note_His_by_name() {
+        val note = Note("H#")
+        assert(note.name == "H#")
+        assert(note.natural == 6)
+        assert(note.note_id == 0)
+    }
 }

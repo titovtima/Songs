@@ -58,6 +58,7 @@ class Note {
                     'b' -> note_id--
                 }
             }
+            note_id = (note_id + 12) % 12
             return Pair(note_id, natural_notes.getFir(short_name)!!)
         }
 
