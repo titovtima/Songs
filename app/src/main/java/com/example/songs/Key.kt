@@ -11,7 +11,7 @@ class Key {
     val note: Note
     val type: Map<Int,Int>
 
-    constructor(note: Note, type: Int) {
+    constructor(note: Note, type: Int = 1) {
         this.note = note
         this.type = Key.types[type]!!
     }

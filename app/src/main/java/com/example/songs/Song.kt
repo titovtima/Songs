@@ -1,9 +1,10 @@
 package com.example.songs
 
 class Song {
-    private var text : String = ""
     private var name : String
+    private var text : String? = ""
     private var second_name : String? = null
+    private var chords : String? = ""
 
     constructor(name: String){
         this.name = name
@@ -12,8 +13,9 @@ class Song {
     fun getName() = name
     fun getSecondName() = second_name
     fun getText() = text
+    fun getChords() = chords
 
-    fun changeName(name: String) {
+    fun setName(name: String) {
         this.name = name
     }
 
@@ -21,9 +23,11 @@ class Song {
         this.second_name = second_name
     }
 
-    fun changeText(text: String) {
+    fun setText(text: String) {
         this.text = text
     }
 
-
+    fun setChords(chords: String) {
+        this.chords = chords
+    }
 }
