@@ -35,10 +35,10 @@ class Note {
                     else -> throw NoteException(note_id, natural)
                 }
             }
-            return when (note_id - natural_notes_id[short_name]!!) {
+            return when ((note_id + 12 - natural_notes_id[short_name]!!) % 12) {
                 0 -> short_name.toString()
                 1 -> short_name.toString() + "#"
-                -1 -> short_name.toString() + "b"
+                11 -> short_name.toString() + "b"
                 else -> throw NoteException(note_id, natural)
             }
         }
