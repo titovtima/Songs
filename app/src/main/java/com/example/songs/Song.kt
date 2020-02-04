@@ -1,5 +1,7 @@
 package com.example.songs
 
+import com.example.songs.Exceptions.ChordException
+
 class Song {
     private var name : String
     private var text : String? = null
@@ -38,5 +40,20 @@ class Song {
 
     fun setMainKey(mainKey: Key?) {
         this.mainKey = mainKey
+    }
+
+    fun transpose(new_key: Key) {
+        val arr_chords = this.chords!!.split(" \n").toTypedArray()
+        for (i in 0..arr_chords.size) {
+            try {
+                val chord = Chord(arr_chords[i], this.key!!)
+                arr_chords[i] = chord.toString(new_key)
+            } catch (e : ChordException) {}
+        }
+        this.chords = ""
+        for (str_ch in arr_chords) {
+            this.chords += str_ch
+        }
+        this.key = new_key
     }
 }
