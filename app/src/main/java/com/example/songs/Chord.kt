@@ -28,7 +28,7 @@ class Chord {
     val inc_bas_step: Int
 
     constructor(step: Int, type: String, bas_step: Int? = null, inc_step: Int = 0, inc_bas_step: Int = 0) {
-        this.step = (step - 1) % 7 + 1
+        this.step = (step + 6) % 7 + 1
         this.type = type
         this.bas_step = bas_step
         this.inc_step = inc_step
@@ -85,6 +85,9 @@ class Chord {
             this.bas_step = null
             this.inc_bas_step = 0
         }
+    }
+
+    constructor(name: String, nameOfKey: String) : this(name, Key(nameOfKey)) {
     }
 
     fun toString(key: Key): String {

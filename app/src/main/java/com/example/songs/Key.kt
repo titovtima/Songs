@@ -1,5 +1,7 @@
 package com.example.songs
 
+import java.security.KeyException
+
 class Key {
     companion object {
         val types = mapOf(
@@ -14,6 +16,21 @@ class Key {
     constructor(note: Note, type: Int = 1) {
         this.note = note
         this.type = Key.types[type]!!
+    }
+
+    constructor(name: String) {
+        val (note, pass) = Note.makeNote(name)
+        this.note = note
+
+        if (name.length > pass) {
+            if (name[pass] == 'm' && name.length == pass + 1) {
+                this.type = Key.types[2]!!
+            } else {
+                throw KeyException(name)
+            }
+        } else {
+            this.type = Key.types[1]!!
+        }
     }
 
     fun getStep(step: Int, inc_step: Int = 0): Note {
