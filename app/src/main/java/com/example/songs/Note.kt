@@ -43,11 +43,12 @@ class Note {
             }
         }
 
-        fun makeIdAndShortName(name: String) : Pair<Int,Int> {
+        data class ResMakeIdAndShortName(val note_id: Int, val natural: Int)
+        fun makeIdAndShortName(name: String) : ResMakeIdAndShortName {
             if (name.isEmpty()) throw NoteException(name)
             if (name[0] == 'B') {
                 if (name.length < 2 || name[1] != 'b') throw NoteException(name)
-                else return Pair(10, natural_notes.getFir('H')!!)
+                else return ResMakeIdAndShortName(10, natural_notes.getFir('H')!!)
             }
             val short_name : Char = name[0]
             if (!natural_notes_id.containsKey(short_name)) throw NoteException(name)
@@ -59,10 +60,11 @@ class Note {
                 }
             }
             note_id = (note_id + 12) % 12
-            return Pair(note_id, natural_notes.getFir(short_name)!!)
+            return ResMakeIdAndShortName(note_id, natural_notes.getFir(short_name)!!)
         }
 
-        fun makeNote(name: String): Pair<Note,Int> {
+        data class ResMakeNoteOfName(val note: Note, val pass: Int)
+        fun makeNote(name: String): ResMakeNoteOfName {
             if (name.length == 0) throw NoteException(name)
             var note: Note?
             var pass: Int
@@ -78,7 +80,7 @@ class Note {
                     throw NoteException(name)
                 }
             }
-            return Pair(note!!, pass)
+            return ResMakeNoteOfName(note!!, pass)
         }
     }
 
@@ -94,8 +96,8 @@ class Note {
 
     constructor(name: String) {
         this.name = name
-        val pair = makeIdAndShortName(name)
-        this.note_id = pair.first
-        this.natural = pair.second
+        val res = makeIdAndShortName(name)
+        this.note_id = res.note_id
+        this.natural = res.natural
     }
 }
