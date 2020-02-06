@@ -67,20 +67,33 @@ class Note {
         fun makeNote(name: String): ResMakeNoteOfName {
             if (name.length == 0) throw NoteException(name)
             var note: Note?
-            var pass: Int
-            try {
-                note = Note(name.substring(0,1))
-                pass = 1
-            } catch (e1: NoteException) {
-                if (name.length == 1) throw NoteException(name)
+//            var pass: Int
+            if (name.length > 1) {
                 try {
                     note = Note(name.substring(0, 2))
-                    pass = 2
-                } catch (e2: NoteException) {
-                    throw NoteException(name)
-                }
+                    return ResMakeNoteOfName(note, 2)
+                } catch (e: NoteException) {}
             }
-            return ResMakeNoteOfName(note!!, pass)
+            if (name.length > 0) {
+                try {
+                    note = Note(name.substring(0, 1))
+                    return ResMakeNoteOfName(note, 1)
+                } catch (e: NoteException) {}
+            }
+            throw NoteException(name)
+//            try {
+//                note = Note(name.substring(0,1))
+//                pass = 1
+//            } catch (e1: NoteException) {
+//                if (name.length == 1) throw NoteException(name)
+//                try {
+//                    note = Note(name.substring(0, 2))
+//                    pass = 2
+//                } catch (e2: NoteException) {
+//                    throw NoteException(name)
+//                }
+//            }
+//            return ResMakeNoteOfName(note!!, pass)
         }
     }
 

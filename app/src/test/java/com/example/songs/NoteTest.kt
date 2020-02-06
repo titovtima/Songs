@@ -75,4 +75,31 @@ class NoteTest {
         assert(note.natural == 6)
         assert(note.note_id == 0)
     }
+
+    @Test
+    fun make_note_Fis_by_chord_name() {
+        val (note, pass) = Note.makeNote("F#sus2")
+        assert(note.name == "F#")
+        assert(note.note_id == 6)
+        assert(note.natural == 3)
+        assert(pass == 2)
+    }
+
+    @Test
+    fun make_note_A_by_chord_name() {
+        val (note, pass) = Note.makeNote("A")
+        assert(note.note_id == 9)
+        assert(note.natural == 5)
+        assert(note.name == "A")
+        assert(pass == 1)
+    }
+
+    @Test
+    fun make_note_Bb_by_chord_name() {
+        val (note, pass) = Note.makeNote("Bbmaj7")
+        assert(note.natural == 6)
+        assert(note.note_id == 10)
+        assert(note.name == "Bb")
+        assert(pass == 2)
+    }
 }
