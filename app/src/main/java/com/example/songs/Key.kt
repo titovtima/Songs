@@ -43,7 +43,7 @@ class Key {
     data class ResWhatStep(val step: Int, val inc_step: Int)
     fun whatStep(note: Note): ResWhatStep {
         val step = (note.natural - this.note.natural + 7) % 7 + 1
-        val inc_step = (note.note_id - this.note.note_id - this.type[step]!! + 12) % 12
+        val inc_step = (note.note_id - this.note.note_id - this.type[step]!! + 24) % 12
         return ResWhatStep(step, inc_step)
     }
 }

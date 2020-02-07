@@ -58,6 +58,7 @@ class Note {
                 when (name[1]) {
                     '#' -> note_id++
                     'b' -> note_id--
+                    else -> throw NoteException(name)
                 }
             }
             note_id = (note_id + 12) % 12
