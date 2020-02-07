@@ -1,6 +1,7 @@
 package com.example.songs
 
 import com.example.songs.Exceptions.NoteException
+import java.lang.Exception
 
 class Note {
     companion object {
@@ -112,5 +113,14 @@ class Note {
         val res = makeIdAndShortName(name)
         this.note_id = res.note_id
         this.natural = res.natural
+    }
+
+    override fun equals(other: Any?): Boolean {
+        try {
+            return this.note_id == (other as Note).note_id
+                    && this.natural == (other as Note).natural
+        } catch (e: Exception) {
+            return super.equals(other)
+        }
     }
 }
