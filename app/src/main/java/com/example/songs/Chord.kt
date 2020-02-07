@@ -40,33 +40,44 @@ class Chord {
 
 //    constructor(step: Int, type: String) : this(step, type, step)
 
-    data class ResFindNotesInName(val note: Note, val bas_note: Note?, val pass: Int)
+    data class ResFindNotesInName(val note: Note, val bas_note: Note?, val pass: Int, val bas_pos: Int)
     fun findNotesInName(name: String) : ResFindNotesInName{
         try {
-            var (note, pass) = Note.makeNote(name)
-            var bas_note: Note? = null
+            val (note, pass) = Note.makeNote(name)
+            val bas_note: Note?
+            val bas_pos: Int
 
-            if (name.length > pass) {
-                if (name[pass] == '/') {
-                    pass++
-                    val res = Note.makeNote(name.substring(pass))
-                    bas_note = res.note
-                    pass += res.pass
-                }
+            if (name.contains('/')) {
+                bas_pos = name.indexOf('/')
+                bas_note = Note.makeNote(name.substring(bas_pos + 1)).note
+            } else {
+                bas_pos = name.length
+                bas_note = null
             }
 
-            return ResFindNotesInName(note, bas_note, pass)
+//            val bas_pos = if (name.contains('/')) name.indexOf('/') else name.length
+//            val bas_note = if (name.contains('/')) Note.makeNote()
+//            if (name.length > pass) {
+//                if (name[pass] == '/') {
+//                    pass++
+//                    val res = Note.makeNote(name.substring(pass))
+//                    bas_note = res.note
+//                    pass += res.pass
+//                }
+//            }
+
+            return ResFindNotesInName(note, bas_note, pass, bas_pos)
         } catch (e: NoteException) {
             throw ChordException(name)
         }
     }
 
     constructor(name: String, key: Key) {
-        val (note, bas_note, pass) = findNotesInName(name)
+        val (note, bas_note, pass, bas_pos) = findNotesInName(name)
 
         if (name.length > pass) {
-            if (Chord.types.containsValue(name.substring(pass))) {
-                this.type = name.substring(pass)
+            if (Chord.types.containsValue(name.substring(pass, bas_pos))) {
+                this.type = name.substring(pass, bas_pos)
             } else {
                 throw ChordException(name)
             }
