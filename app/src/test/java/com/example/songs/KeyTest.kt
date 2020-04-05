@@ -4,6 +4,17 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class KeyTest {
+
+    fun runAllTests() {
+        create_Fis_by_typeId()
+        create_Hm_by_typeId()
+        create_Cb_by_note()
+        create_Cism_by_name()
+        create_G_by_name()
+        create_Dm_by_name()
+        create_Bb_by_name()
+    }
+
     @Test
     fun create_Fis_by_typeId() {
         val key = Key(Note("F#"), 1)

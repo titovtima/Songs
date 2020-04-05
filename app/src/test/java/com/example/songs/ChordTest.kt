@@ -6,6 +6,14 @@ import org.junit.Assert.*
 
 class ChordTest {
 
+    fun runAllTests() {
+        create_VIIm7_by_numbers()
+        create_G_in_C()
+        create_Fissus2_in_Cism()
+        create_Bbmaj7_in_C()
+        create_Fis2_basCis_in_Gm()
+    }
+
     @Test
     fun create_VIIm7_by_numbers() {
         val chord = Chord(7, "m7")

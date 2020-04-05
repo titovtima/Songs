@@ -4,6 +4,22 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NoteTest {
+
+    fun runAllTests() {
+        create_note_C_by_name()
+        create_note_Gis_by_name()
+        create_note_Bb_by_name()
+        create_note_Db_by_id()
+        create_note_His_by_id()
+        create_note_A_by_id()
+        create_note_Cb_by_id()
+        create_note_Cb_by_name()
+        create_note_His_by_name()
+        make_note_Fis_by_chord_name()
+        make_note_A_by_chord_name()
+        make_note_Bb_by_chord_name()
+    }
+
     @Test
     fun create_note_C_by_name() {
         val note = Note("C")
