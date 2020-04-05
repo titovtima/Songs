@@ -1,4 +1,4 @@
 package com.example.songs.Exceptions
 
-class ChordException (val name: String?) : Exception() {
+class ChordException (message: String) : Exception(message) {
 }
