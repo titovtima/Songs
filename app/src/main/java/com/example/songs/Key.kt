@@ -1,6 +1,6 @@
 package com.example.songs
 
-import java.security.KeyException
+import com.example.songs.Exceptions.KeyException
 
 class Key {
     companion object {
@@ -15,7 +15,7 @@ class Key {
 
     constructor(note: Note, type: Int = 1) {
         this.note = note
-        this.type = Key.types[type]!!
+        this.type = Key.types[type] ?: throw KeyException("Incorrect key type: $type")
     }
 
     constructor(name: String) {
@@ -24,12 +24,12 @@ class Key {
 
         if (name.length > pass) {
             if (name[pass] == 'm' && name.length == pass + 1) {
-                this.type = Key.types[2]!!
+                this.type = Key.types.getValue(2)
             } else {
-                throw KeyException(name)
+                throw KeyException("Incorrect name of Key: $name")
             }
         } else {
-            this.type = Key.types[1]!!
+            this.type = Key.types.getValue(1)
         }
     }
 
@@ -37,13 +37,13 @@ class Key {
         var st = step
         if (st > 7)
             st = (st - 1) % 7 + 1
-        return Note(this.note.note_id + this.type[st]!! + inc_step, this.note.natural + st)
+        return Note(this.note.note_id + this.type.getValue(st) + inc_step, this.note.natural + st)
     }
 
     data class ResWhatStep(val step: Int, val inc_step: Int)
     fun whatStep(note: Note): ResWhatStep {
         val step = (note.natural - this.note.natural + 7) % 7 + 1
-        val inc_step = (note.note_id - this.note.note_id - this.type[step]!! + 24) % 12
+        val inc_step = (note.note_id - this.note.note_id - this.type.getValue(step) + 24) % 12
         return ResWhatStep(step, inc_step)
     }
 }

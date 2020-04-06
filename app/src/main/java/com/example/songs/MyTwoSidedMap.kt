@@ -8,8 +8,8 @@ class MyTwoSidedMap<F, S>() : HashMap<F, S>() {
         return super.put(key, value)
     }
 
-    fun getSec(key: F) = this[key]
-    fun getFir(key: S) = this.backMap[key]
+    fun getSec(key: F) = this.getValue(key)
+    fun getFir(key: S) = this.backMap.getValue(key)
 
     constructor(map: Map<F, S>) : this(){
         for (e in map.entries) {

@@ -27,7 +27,7 @@ class Note {
 
         fun makeName(note_id: Int, natural: Int) : String {
             if (!natural_notes.containsKey(natural)) throw NoteException(note_id, natural)
-            val short_name = natural_notes[natural]!!
+            val short_name = natural_notes[natural] ?: throw NoteException(note_id, natural)
             if (!natural_notes_id.containsKey(short_name)) throw NoteException(note_id, natural)
             if (note_id == 10) {
                 return when (short_name) {
@@ -36,7 +36,7 @@ class Note {
                     else -> throw NoteException(note_id, natural)
                 }
             }
-            return when ((note_id + 12 - natural_notes_id[short_name]!!) % 12) {
+            return when ((note_id + 12 - natural_notes_id.getValue(short_name)) % 12) {
                 0 -> short_name.toString()
                 1 -> short_name.toString() + "#"
                 11 -> short_name.toString() + "b"
@@ -49,11 +49,11 @@ class Note {
             if (name.isEmpty()) throw NoteException(name)
             if (name[0] == 'B') {
                 if (name.length < 2 || name[1] != 'b') throw NoteException(name)
-                else return ResMakeIdAndShortName(10, natural_notes.getFir('H')!!)
+                else return ResMakeIdAndShortName(10, natural_notes.getFir('H'))
             }
             val short_name : Char = name[0]
             if (!natural_notes_id.containsKey(short_name)) throw NoteException(name)
-            var note_id : Int = natural_notes_id[short_name]!!
+            var note_id : Int = natural_notes_id.getValue(short_name)
             if (name.length > 1) {
                 when (name[1]) {
                     '#' -> note_id++
@@ -62,7 +62,7 @@ class Note {
                 }
             }
             note_id = (note_id + 12) % 12
-            return ResMakeIdAndShortName(note_id, natural_notes.getFir(short_name)!!)
+            return ResMakeIdAndShortName(note_id, natural_notes.getFir(short_name))
         }
 
         data class ResMakeNoteOfName(val note: Note, val pass: Int)

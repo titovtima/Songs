@@ -36,7 +36,8 @@ class Chord {
     }
 
     constructor(step: Int, type: Int, bas_step: Int? = null, inc_step: Int = 0, inc_bas_step: Int = 0) :
-            this(step, Chord.types[type]!!, bas_step, inc_step, inc_bas_step)
+            this(step, Chord.types[type] ?: throw ChordException("Incorrect chord type: $type"),
+                bas_step, inc_step, inc_bas_step)
 
 //    constructor(step: Int, type: String) : this(step, type, step)
 
@@ -98,8 +99,7 @@ class Chord {
         }
     }
 
-    constructor(name: String, nameOfKey: String) : this(name, Key(nameOfKey)) {
-    }
+    constructor(name: String, nameOfKey: String) : this(name, Key(nameOfKey))
 
     fun toString(key: Key): String {
         var out = key.getStep(this.step, this.inc_step).name
